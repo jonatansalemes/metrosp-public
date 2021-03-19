@@ -1,0 +1,58 @@
+id: 'checkBalanceResolution'
+type: 'node'
+before:
+  -  type: 'http-request'
+     method: 'get'
+     url: >
+            (js) -> return `${env.API_URL_BASE}/api/v1/balances/${context.cardNumber}`
+     putOnContextAs: 'balanceResponse'
+  -  type: 'put-on-context'
+     key: 'checkBalanceNotificationBalance'
+     value: >
+              (js) -> return context.balanceResponse.body.balance;
+components:
+   -  type : 'text'
+      text: > 
+              (js) -> return `Olá ${context.balanceResponse.body.fullName}, seu saldo é de ${context.balanceResponse.body.balance} passagens. Caso deseje receber o saldo por email e SMS confirme os dados abaixo e clique em "Próximo passo"`;
+   -  type: 'typing'
+      duration: '1s'
+      text: 'Gerando formulário'
+   -  type: 'form'
+      title: 'Atendente Virtual MetroSP'
+      fields:
+         -  type: 'form-field'
+            label: 'Nome para notificação'
+            required: true
+            components:
+               - type : 'input'
+                 putOnContextAs : 'checkBalanceNotificationFullName'
+                 required: true
+                 placeholder: 'Preencha o nome do titular'
+                 value: > 
+                           (js) -> return context.balanceResponse.body.fullName;
+         -  type: 'form-field'
+            label: 'Email para notificação'
+            required: true
+            components:
+               - type : 'input'
+                 of: 'email'
+                 putOnContextAs : 'checkBalanceNotificationEmail'
+                 required: true
+                 placeholder: 'Preencha o email do titular'
+                 value: > 
+                           (js) -> return context.balanceResponse.body.email;
+         -  type: 'form-field'
+            label: 'Telefone para notificação'
+            required: true
+            components:
+               - type : 'input'
+                 of: 'phone'
+                 putOnContextAs : 'checkBalanceNotificationPhone'
+                 required: true
+                 placeholder: 'Preencha o número de telefone'
+                 value: > 
+                           (js) -> return context.balanceResponse.body.phone;
+hasNext: true
+next: 'checkBalanceNotification'
+hasPrevious: true
+previous: 'checkBalance'   

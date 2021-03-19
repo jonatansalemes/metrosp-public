@@ -1,0 +1,11 @@
+id: 'newProblemAsVoiceTranslate'
+type: 'node'
+transition: 'auto'
+before:
+   -  type: 'stt'
+      fromContext: 'newProblemAsVoiceAudio'
+      provider: 'metroSpSpeechToText'
+      putOnContextAs: 'problemDescription'
+hasNext: true
+next: 'newProblemDecision'
+   

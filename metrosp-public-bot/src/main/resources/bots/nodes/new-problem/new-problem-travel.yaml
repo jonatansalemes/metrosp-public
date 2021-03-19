@@ -1,0 +1,28 @@
+id: 'newProblemTravel'
+type: 'node'
+before:
+   -  type: 'tts'
+      provider: 'metroSpTicTextToSpeech'
+      text: >
+            (js) -> 
+                        if(context.problemNluResponse.entities && (context.problemNluResponse.entities.stations[0] === 'sao bento' || context.problemNluResponse.entities.stations[0] === 'São Bento')  && context.problemNluResponse.entities.stations[1] === 'mackenzie'){
+                           return 'Entendi, para ir da estação são bento até a estação do mackenzie você deve pegar a linha azul ir até a estação da luz fazer baldeação para a linha amarela e tomar o metrô sentido morumbi';
+                        }
+                        return 'Olá, entendi que você deseja saber alguma rota específica de metrô, porém não consegui entender o trajeto a ser percorrido. Você pode tentar ir para o passo anterior e descrever melhor as rotas.';
+                   
+      putOnContextAs: 'problemResolutionAudioResponse'  
+components: 
+   -  type: 'audio-player'
+      data: (js) -> return context.problemResolutionAudioResponse;
+      autoPlay: true
+   -  type: 'text'
+      text: 'Aproveitando o seu tempo, estamos lhe enviando um de nossos vídeos, que dá dicas sobre embarque/desembarque em tempos de pandemia.'
+   -  type: 'youtube-video'
+      videoId: '0QS-al9fTwg'
+hasPrevious: true
+previous: >
+             (js) -> if(context.newProblemInterface === 'asText') {
+                return 'newProblemAsText';
+             }  else {
+                return 'newProblemAsVoice';
+             }

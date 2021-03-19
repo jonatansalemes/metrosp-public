@@ -1,0 +1,65 @@
+id: 'bots'
+version: 'v1'
+entrypoint: 'welcome'
+type: 'bot'
+nodes:
+   - ref: 'welcome.yaml'
+     type: 'node'
+   - ref: 'new-problem.yaml'
+     type: 'node'
+   - ref: 'new-problem-as-text.yaml'
+     type: 'node'
+   - ref: 'new-problem-as-voice.yaml'
+     type: 'node'
+   - ref: 'new-problem-as-voice-translate.yaml'
+     type: 'node'
+   - ref: 'new-problem-travel.yaml'
+     type: 'node'  
+   - ref: 'new-problem-unknow.yaml'
+     type: 'node'  
+   - ref: 'new-problem-decision.yaml'
+     type: 'node'  
+   - ref: 'check-balance.yaml'
+     type: 'node'
+   - ref: 'check-balance-resolution.yaml'
+     type: 'node'
+   - ref: 'check-balance-notification.yaml'
+     type: 'node'
+providers:
+   type: 'provider'
+   mail:
+      - id: 'metroSpMailer'
+        type: 'simple-mail-provider'
+        smtp: 'email-smtp.us-east-1.amazonaws.com'
+        port: 465
+        tls: true
+        username: (js) -> return env.AWS_ACCESS_KEY;
+        password: (js) -> return env.AWS_ACCESS_SECRET;
+        from: 'app@jslsolucoes.com'
+        fromName: 'JSL Solucoes LTDA'
+   sms:
+      - id: 'metroSpSms'
+        type: 'twilio-sms-provider'
+        accountSid: (js) -> return env.TWILIO_ACCOUNT_SID;
+        authToken: (js) -> return env.TWILIO_AUTH_TOKEN;
+        from: '+14243611384'
+   wpp:
+      - id: 'metroSpWpp'
+        type: 'twilio-wpp-provider'
+        accountSid: (js) -> return env.TWILIO_ACCOUNT_SID;
+        authToken: (js) -> return env.TWILIO_AUTH_TOKEN;
+        from: '+14243611384'
+   tts:
+      - id: 'metroSpTicTextToSpeech'
+        type: 'ibm-tts-provider'
+        apiKey: (js) -> return env.IBM_TTS_API_KEY;
+   stt:
+      - id: 'metroSpSpeechToText'
+        type: 'google-stt-provider'
+        credentials: (js) -> return env.GOOGLE_STT_CREDENTIALS;
+   nlu:
+      - id: 'metroSpNlu'
+        type: 'microsoft-nlu-provider'
+        subscriptionKey: (js) -> return env.MICROSOFT_SUBSCRIPTION_KEY;
+        applicationId: (js) -> return env.MICROSOFT_APPLICATION_ID;
+        endpoint: (js) -> return env.MICROSOFT_ENDPOINT;;

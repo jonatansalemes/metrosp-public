@@ -1,0 +1,13 @@
+id: 'newProblemAsVoice'
+type: 'node'
+components: 
+   -  type: 'typing'
+      duration: '1s'
+      text: 'Gerando formulário'
+   -  type: 'audio-recorder'
+      putOnContextAs: 'newProblemAsVoiceAudio'
+hasPrevious: true
+previous: 'newProblem'
+hasNext: true
+next: 'newProblemAsVoiceTranslate'
+   

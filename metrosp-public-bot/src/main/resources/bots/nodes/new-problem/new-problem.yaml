@@ -1,0 +1,36 @@
+id: 'newProblem'
+type: 'node'
+components: 
+   -  type: 'typing'
+      duration: '1s'
+      text: 'Gerando formulário'
+   -  type: 'form'
+      title: 'Atendente Virtual MetroSP'
+      fields:
+      -  type: 'form-field'
+         components:
+         -  type: 'button-group'
+            putOnContextAs: 'newProblemInterface'
+            text: 'Por favor, escolha um meio de comunicação.'
+            required: true
+            buttons:
+            -  text: 'Gostaria de me comunicar via texto'
+               value: 'asText'
+               type: 'button'
+            -  text: 'Gostaria de me comunicar via voz'
+               value: 'asVoice'
+               type: 'button'
+            value: > 
+               (js) => if(context.exists('newProblemInterface')) {
+                           return context.newProblemInterface;
+                        } else {
+                           return '';
+                        }
+hasPrevious: true
+previous: 'welcome'
+hasNext: true
+next: (js) -> if(context.newProblemInterface === 'asText') {
+                  return 'newProblemAsText';
+               } else {
+                  return 'newProblemAsVoice';
+               }

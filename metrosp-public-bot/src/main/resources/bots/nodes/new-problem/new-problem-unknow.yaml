@@ -1,0 +1,22 @@
+id: 'newProblemUnknow'
+type: 'node'
+before:
+   -  type: 'tts'
+      provider: 'metroSpTicTextToSpeech'
+      text: 'Olá, não entendi muito bem suas intenções, me desculpe mais ainda estou aprendendo. Você pode tentar novamente clicando em "Passo anterior" e descrevendo o problema de maneira diferente'
+      putOnContextAs: 'unknowIntentAudioResponse'
+components: 
+   -  type: 'audio-player'
+      data: (js) -> return context.unknowIntentAudioResponse;
+      autoPlay: true
+   -  type: 'text'
+      text: 'Não entendi muito bem suas intenções, me desculpe, mais ainda estou aprendendo. Voce pode tentar me perguntar sobre saldo do seu cartão de embarque ou quais linhas pegar entre estações. Aqui vai um vídeo explicando o que voce pode me perguntar'
+   -  type: 'youtube-video'
+      videoId: 's_d6M8MgrO0'
+hasPrevious: true
+previous: >
+             (js) -> if(context.newProblemInterface === 'asText') {
+                return 'newProblemAsText';
+             }  else {
+                return 'newProblemAsVoice';
+             }

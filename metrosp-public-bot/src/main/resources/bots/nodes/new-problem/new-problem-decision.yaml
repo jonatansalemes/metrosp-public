@@ -1,0 +1,17 @@
+id: 'newProblemDecision'
+type: 'node'
+transition: auto
+before:
+   -  type: 'nlu'
+      text: (js) -> return context.problemDescription;
+      provider: 'metroSpNlu'
+      putOnContextAs: 'problemNluResponse'
+hasNext: true
+next: >
+         (js) -> if(context.problemNluResponse.intent === 'travel') {
+               return 'newProblemTravel';
+         } else if(context.problemNluResponse.intent === 'balance') {
+               return 'checkBalance';
+         } else {
+            return 'newProblemUnknow';
+         }

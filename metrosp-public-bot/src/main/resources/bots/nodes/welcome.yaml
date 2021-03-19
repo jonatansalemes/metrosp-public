@@ -1,0 +1,31 @@
+id: 'welcome'
+type: 'node'
+components:
+   -  type: 'typing'
+      duration: '1s'
+      text: 'Gerando formulário'
+   -  type: 'form'
+      title: 'Atendente Virtual MetroSP'
+      fields:
+      -  type: 'form-field'
+         components:
+         -  type: 'button-group'
+            putOnContextAs: 'flow'
+            text: 'Por favor, escolha uma opção para iniciar o atendimento.'
+            required: true
+            buttons:
+            -  text: 'Gostaria de verificar o saldo do meu cartão do metrô'
+               value: 'checkBalance'
+               type: 'button'
+            -  text: 'Gostaria de descrever um problema em que o atendente virtual me guie no processo de atendimento'
+               value: 'newProblem'
+               type: 'button'
+            value: > 
+               (js) => if(context.exists('flow')) {
+                           return context.flow;
+                        } else {
+                           return '';
+                        }
+hasNext: true
+next: (js) -> return context.flow; 
+                       

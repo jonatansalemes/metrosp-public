@@ -1,0 +1,27 @@
+id: 'newProblemAsText'
+type: 'node'
+components: 
+   -  type: 'typing'
+      duration: '1s'
+      text: 'Gerando formulário'
+   -  type: 'form'
+      title: 'Atendente Virtual MetroSP'
+      fields:
+         -  type: 'form-field'
+            label: 'Descreva a situação a ser avaliada'
+            required: true
+            components:
+               -  type: 'textarea'
+                  putOnContextAs: 'problemDescription'
+                  placeholder: 'Digite o problema pelo qual voce está passando. Alguns exemplos são: Preciso ir da estação São Bento até a estação Mackenzie; Gostaria de saber o saldo do meu cartão de metrô'
+                  value: >
+                     (js) => if(context.exists('problemDescription')) {
+                                 return context.problemDescription;
+                              } else {
+                                 return '';
+                              }
+                  required: true
+hasPrevious: true
+previous: 'newProblem'
+hasNext: true
+next: 'newProblemDecision'

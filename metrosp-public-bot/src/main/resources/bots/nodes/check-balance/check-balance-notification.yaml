@@ -1,0 +1,26 @@
+id: 'checkBalanceNotification'
+type: 'node'
+before:
+   - type: 'mail'
+     provider: 'metroSpMailer'
+     subject: (js) => return `Consulta de saldo de passagens`;
+     message: (js) -> return `Olá ${context.checkBalanceNotificationFullName}, seu saldo é de ${context.checkBalanceNotificationBalance} passagens. Um SMS e uma mensagem de WhatsApp também foram enviados contendo os dados da solicitação.`;
+     to:
+        - (js) => return context.checkBalanceNotificationEmail;
+   - type: 'sms'
+     provider: 'metroSpSms'
+     message: (js) -> return `Olá ${context.checkBalanceNotificationFullName}, seu saldo é de ${context.checkBalanceNotificationBalance} passagens. Um email e uma mensagem de WhatsApp também foram enviados contendo os dados da solicitação.`;
+     to:
+        - (js) => return '+55' + context.checkBalanceNotificationPhone;
+   - type: 'wpp'
+     provider: 'metroSpWpp'
+     message: (js) -> return `Olá ${context.checkBalanceNotificationFullName}, seu saldo é de ${context.checkBalanceNotificationBalance} passagens. Um email e um SMS também foram enviados contendo os dados da solicitação.`;
+     to:
+        - (js) => return '+55' + context.checkBalanceNotificationPhone;
+components:
+   - type: 'text'
+     text: 'As notificações solicitadas foram enviadas com sucesso para seu email e número de celular'
+   - type: 'dialog'
+     of: 'success'
+     text: (js) -> return `Notificações enviadas com sucesso . Confira seu email e número de celular`;
+     title: 'Envio de notificações'
