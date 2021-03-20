@@ -1,5 +1,6 @@
 package com.jslsolucoes.metrosp.pub.api.domain.repo;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
@@ -14,5 +15,8 @@ public interface TaskCategoryRepo extends CrudRepository<TaskCategory, Long> {
 
 	@Query("select tc from TaskCategory tc where tc.alias = :alias")
 	public Optional<TaskCategory> findByAlias(@Param("alias") String alias);
+
+	@Query("select tc from TaskCategory tc order by tc.name")
+	public List<TaskCategory> all();
 
 }
