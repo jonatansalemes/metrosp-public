@@ -69,17 +69,19 @@ const TaskViewer: React.FC<TaskViewerProps> = ({ appContext }) => {
                     <thead className="table-dark">
                         <tr>
                             <th>#</th>
+                            <th>Categoria</th>
                             <th>Requisitante</th>
                             <th>Data/Hora</th>
                             <th>Conteúdo</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {tasks.length === 0 && <tr><td colSpan={4} className="text-center">Não há atividades disponíveis para atuação</td></tr>}
+                        {tasks.length === 0 && <tr><td colSpan={5} className="text-center">Não há atividades disponíveis para atuação</td></tr>}
                         {
                             tasks.map((task, index) => {
                                 return <tr key={index}>
                                     <td><div className="text-truncate truncate">{task.uuid}</div></td>
+                                    <td>{task.categoryName}</td>
                                     <td>{task.requester}</td>
                                     <td>{moment(task.createdAt).format('DD/MM/YYYY HH:MM:SS')}</td>
                                     <td>

@@ -3,6 +3,7 @@ export type Task = {
     requester: string;
     content: string;
     createdAt: Date;
+    categoryName: string;
 }
 
 export type TaskCategory = {
