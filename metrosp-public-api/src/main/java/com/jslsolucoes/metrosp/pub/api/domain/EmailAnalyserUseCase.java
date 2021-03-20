@@ -38,7 +38,7 @@ public class EmailAnalyserUseCase {
 				String label = classifyResult.getLabel();
 				logger.info("New email from ({}) {} with message {} was created as {} with priority 0", id, from,
 						message, label);
-				tasks.add(taskUseCase.createNewOne(id, from, label, 0 , message));
+				tasks.add(taskUseCase.createNewOne(id, from, label, 0, message, "exchange"));
 			} else {
 				logger.info("Email id {} was already indexed", id);
 			}

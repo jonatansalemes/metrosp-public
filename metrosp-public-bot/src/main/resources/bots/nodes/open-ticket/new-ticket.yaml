@@ -1,0 +1,71 @@
+id: 'newTicket'
+type: 'node'
+before:
+   -  type: 'http-request'
+      method: 'get'
+      url: >
+             (js) -> return `${env.API_URL_BASE}/api/v1/taskCategories`
+      putOnContextAs: 'taskCategoriesResponse'
+components: 
+   -  type: 'typing'
+      duration: '1s'
+      text: 'Gerando formulário'
+   -  type: 'form'
+      title: 'Formulário de solicitação'
+      fields:
+         -  type: 'form-field'
+            label: 'Escolha um setor com o qual deseja falar'
+            required: true
+            components:
+               - type : 'select'
+                 putOnContextAs : 'newTicketTaskCategory'
+                 required: true
+                 placeholder: 'Escolha o setor'
+                 map: > 
+                          (js) -> return context.taskCategoriesResponse.body
+                                                .filter(taskCategory => taskCategory.alias !== 'unknow')
+                                                .map(taskCategory => {
+                                return {
+                                   value: taskCategory.alias,
+                                   text: taskCategory.name
+                                };
+                          });
+                 value: > 
+                           (js) -> if(context.exists('newTicketTaskCategory')) { 
+                                      return context.newTicketTaskCategory.value;
+                                   } else {
+                                      return '';
+                                   }
+         -  type: 'form-field'
+            label: 'Confirme o nome completo'
+            required: true
+            components:
+               - type : 'input'
+                 of: 'text'
+                 putOnContextAs : 'newTicketRequester'
+                 required: true
+                 placeholder: 'Preencha seu nome completo'
+                 value: > 
+                          (js) -> if(context.exists('newTicketRequester')) { 
+                                      return context.newTicketRequester;
+                                   } else {
+                                      return '';
+                                   }
+         -  type: 'form-field'
+            label: 'Mensagem'
+            required: true
+            components:
+               -  type: 'textarea'
+                  putOnContextAs: 'newTicketMessage'
+                  placeholder: 'Mensagem'
+                  value: >
+                     (js) => if(context.exists('newTicketMessage')) {
+                                 return context.newTicketMessage;
+                              } else {
+                                 return '';
+                              }
+                  required: true
+hasNext: true
+next: 'newTicketResolution'                               
+hasPrevious: true
+previous: 'welcome'

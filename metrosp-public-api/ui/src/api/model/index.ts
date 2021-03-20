@@ -4,6 +4,7 @@ export type Task = {
     content: string;
     createdAt: Date;
     categoryName: string;
+    originName: string;
 }
 
 export type TaskCategory = {

@@ -18,5 +18,5 @@ public interface TaskRepo extends CrudRepository<Task, Long> {
 
 	@Query("select t from Task t inner join fetch t.taskCategory tc where tc.alias = :taskCategory")
 	public List<Task> allForCategory(@Param("taskCategory") String taskCategory);
-	
+
 }

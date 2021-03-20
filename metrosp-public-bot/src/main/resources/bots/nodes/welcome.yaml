@@ -14,12 +14,15 @@ components:
             text: 'Por favor, escolha uma opção para iniciar o atendimento.'
             required: true
             buttons:
-            -  text: 'Gostaria de verificar o saldo do meu cartão do metrô'
-               value: 'checkBalance'
-               type: 'button'
-            -  text: 'Gostaria de descrever um problema em que o atendente virtual me guie no processo de atendimento'
-               value: 'newProblem'
-               type: 'button'
+               -  text: 'Gostaria de falar com a central de relacionamento com o cliente'
+                  value: 'newTicket'
+                  type: 'button'
+               -  text: 'Gostaria de verificar o saldo do meu cartão do metrô'
+                  value: 'checkBalance'
+                  type: 'button'
+               -  text: 'Gostaria de descrever um problema em que o atendente virtual me guie no processo de atendimento'
+                  value: 'newProblem'
+                  type: 'button'
             value: > 
                (js) => if(context.exists('flow')) {
                            return context.flow;

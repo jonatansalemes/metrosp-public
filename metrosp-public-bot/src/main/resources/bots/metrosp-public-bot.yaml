@@ -25,6 +25,10 @@ nodes:
      type: 'node'
    - ref: 'check-balance-notification.yaml'
      type: 'node'
+   - ref: 'new-ticket.yaml'
+     type: 'node'
+   - ref: 'new-ticket-resolution.yaml'
+     type: 'node'
 providers:
    type: 'provider'
    mail:

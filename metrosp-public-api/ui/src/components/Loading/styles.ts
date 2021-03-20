@@ -2,12 +2,14 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 
-    position: fixed;
+   position: fixed;
     top: 0;
 	left: 0;
     bottom:0;
     right:0;
 	z-index: 2000;
+	width: 100vw;
+	height: 100vh;
 
     background: rgba(0,0,0,.4);
     
@@ -15,9 +17,7 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
 
-    div.loading {
-        width: 60px;
-        height: 60px;
+    div.ui-loading {
         background-color: #fff;
         padding: 10px;
         border-radius: .25rem;
@@ -26,7 +26,7 @@ export const Container = styled.div`
         justify-content: center;
     }
 
-    div.loading-indicator {
+    div.ui-loading-indicator {
         width: 60px;
         height: 60px;
     }

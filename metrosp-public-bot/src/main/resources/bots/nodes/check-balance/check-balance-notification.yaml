@@ -14,7 +14,7 @@ before:
         - (js) => return '+55' + context.checkBalanceNotificationPhone;
    - type: 'wpp'
      provider: 'metroSpWpp'
-     message: (js) -> return `Olá ${context.checkBalanceNotificationFullName}, seu saldo é de ${context.checkBalanceNotificationBalance} passagens. Um email e um SMS também foram enviados contendo os dados da solicitação.`;
+     message: (js) -> return `Olá ${context.checkBalanceNotificationFullName}, seu saldo é de ${context.checkBalanceNotificationBalance} passagens. Um email e um SMS também foram enviados contendo os dados da solicitação.\``;
      to:
         - (js) => return '+55' + context.checkBalanceNotificationPhone;
 components:

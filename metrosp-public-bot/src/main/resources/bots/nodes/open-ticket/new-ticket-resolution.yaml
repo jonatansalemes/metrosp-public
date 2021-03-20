@@ -1,0 +1,27 @@
+id: 'newTicketResolution'
+type: 'node'
+before:
+  -  type: 'http-request'
+     url: >
+             (js) -> return `${env.API_URL_BASE}/api/v1/tasks`
+     method: 'post'
+     headers:
+        - name: 'Content-Type'
+          value: 'application/json'
+     body:     
+        requester: (js) => return context.newTicketRequester;
+        priority: 2
+        category: (js) => return context.newTicketTaskCategory.value;
+        content: (js) => return context.newTicketMessage;
+        origin: 'chatbot'
+     putOnContextAs: 'createNewTicketResponse'
+components:
+   -  type : 'text'
+      text: > 
+              (js) -> return `Olá ${context.newTicketRequester}, sua solicitação foi aberta com sucesso, em breve retornaremos o contato iniciando a resolução do seu problema`;
+   - type: 'dialog'
+     of: 'success'
+     text: (js) -> return `Olá ${context.newTicketRequester}, sua solicitação foi aberta com sucesso`;
+     title: 'Resultado da solicitação'
+hasPrevious: true
+previous: 'newTicket'   

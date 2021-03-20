@@ -16,7 +16,9 @@ import com.jslsolucoes.metrosp.pub.api.domain.MachineLearningUseCase;
 import com.jslsolucoes.metrosp.pub.api.domain.MachineLearningUseCase.TrainModel;
 import com.jslsolucoes.metrosp.pub.api.domain.MachineLearningUseCase.TrainModelEntry;
 import com.jslsolucoes.metrosp.pub.api.domain.model.TaskCategory;
+import com.jslsolucoes.metrosp.pub.api.domain.model.TaskOrigin;
 import com.jslsolucoes.metrosp.pub.api.domain.repo.TaskCategoryRepo;
+import com.jslsolucoes.metrosp.pub.api.domain.repo.TaskOriginRepo;
 
 @SpringBootApplication
 @EnableScheduling
@@ -30,13 +32,18 @@ public class Application {
 	}
 
 	@Bean
-	public CommandLineRunner loadData(TaskCategoryRepo taskCategoryRepo,
+	public CommandLineRunner loadData(TaskCategoryRepo taskCategoryRepo, TaskOriginRepo taskOriginRepo,
 			MachineLearningUseCase machineLearningUseCase) {
 		return (args) -> {
 			taskCategoryRepo.saveAll(taskCategories());
+			taskOriginRepo.saveAll(taskOrigins());
 			logger.info("Ask for train exchangeMachineLearningModel: {}",
 					machineLearningUseCase.train(trainModel()).getStatus());
 		};
+	}
+
+	private List<TaskOrigin> taskOrigins() {
+		return List.of(new TaskOrigin("Chatbot", "chatbot"), new TaskOrigin("Exchange", "exchange"));
 	}
 
 	private TrainModel trainModel() {
@@ -52,6 +59,7 @@ public class Application {
 	}
 
 	private List<TaskCategory> taskCategories() {
-		return List.of(new TaskCategory("Ouvidoria", "complains"), new TaskCategory("Apoio ao usuário", "questions"));
+		return List.of(new TaskCategory("Não categorizado", "unknow"), new TaskCategory("Ouvidoria", "complains"),
+				new TaskCategory("Apoio ao usuário", "questions"));
 	}
 }

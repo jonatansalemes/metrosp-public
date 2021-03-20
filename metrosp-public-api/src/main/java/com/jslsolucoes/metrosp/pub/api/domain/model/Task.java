@@ -23,10 +23,10 @@ public class Task {
 
 	@Column(nullable = false)
 	private String requester;
-	
+
 	@Column(nullable = false, unique = true)
 	private String uuid;
-	
+
 	@Column(nullable = false)
 	@Lob
 	private String content;
@@ -34,6 +34,10 @@ public class Task {
 	@ManyToOne
 	@JoinColumn(name = "id_task_category", nullable = false)
 	private TaskCategory taskCategory;
+
+	@ManyToOne
+	@JoinColumn(name = "id_task_origin", nullable = false)
+	private TaskOrigin taskOrigin;
 
 	@Column(nullable = false)
 	private LocalDateTime createdAt;
@@ -45,31 +49,41 @@ public class Task {
 
 	}
 
-	public Task(String uuid, String requester, TaskCategory taskCategory, LocalDateTime createdAt, Integer priority, String content) {
+	public Task(String uuid, String requester, TaskCategory taskCategory, LocalDateTime createdAt, Integer priority,
+			String content, TaskOrigin taskOrigin) {
 		this.uuid = uuid;
 		this.requester = requester;
 		this.taskCategory = taskCategory;
 		this.createdAt = createdAt;
 		this.priority = priority;
 		this.content = content;
+		this.taskOrigin = taskOrigin;
 	}
 
 	public Long id() {
 		return id;
 	}
-	
+
 	public String uuid() {
 		return uuid;
 	}
-	
+
 	public String content() {
 		return content;
 	}
-	
+
+	public String taskOriginName() {
+		return taskOrigin.name();
+	}
+
+	public String taskOriginAlias() {
+		return taskOrigin.alias();
+	}
+
 	public String taskCategoryName() {
 		return taskCategory.name();
 	}
-	
+
 	public String taskCategoryAlias() {
 		return taskCategory.alias();
 	}

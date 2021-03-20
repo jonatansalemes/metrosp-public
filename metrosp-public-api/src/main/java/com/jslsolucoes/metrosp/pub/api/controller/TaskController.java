@@ -33,8 +33,7 @@ public class TaskController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<TaskView>> all(
-			@RequestParam(value = "taskCategory") String taskCategory) {
+	public ResponseEntity<List<TaskView>> all(@RequestParam(value = "taskCategory") String taskCategory) {
 		List<Task> tasks = taskUseCase.allForCategory(taskCategory);
 		if (CollectionUtils.isEmpty(tasks)) {
 			return Responses.notFound();
@@ -54,13 +53,13 @@ public class TaskController {
 
 	@Transactional
 	@PostMapping
-	public ResponseEntity<TaskView> createNewOne(@RequestBody @Valid CreateTicketRequest createTicketRequest) {
-		String uuid = createTicketRequest.uuid();
+	public ResponseEntity<TaskView> createNewOne(@RequestBody @Valid CreateTaskRequest createTaskRequest) {
+		String uuid = createTaskRequest.hasUiid() ? createTaskRequest.uuid() : createTaskRequest.generateNewUuid();
 		if (taskUseCase.wasIndexed(uuid)) {
 			return Responses.conflict();
 		}
-		Task task = taskUseCase.createNewOne(uuid, createTicketRequest.requester(), createTicketRequest.category(),
-				createTicketRequest.priority(),createTicketRequest.content());
+		Task task = taskUseCase.createNewOne(uuid, createTaskRequest.requester(), createTaskRequest.category(),
+				createTaskRequest.priority(), createTaskRequest.content(), createTaskRequest.origin());
 		return Responses.created(new TaskView(task), "/{id}", task.id());
 	}
 

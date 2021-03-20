@@ -1,26 +1,36 @@
 package com.jslsolucoes.metrosp.pub.api.controller;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class CreateTicketRequest {
-	
-	@NotNull
+public class CreateTaskRequest {
+
 	private String uuid;
-	
-	@NotNull
+
+	@NotBlank
+	private String origin;
+
+	@NotBlank
 	private String requester;
-	
-	@NotNull
+
+	@NotBlank
 	private String category;
-	
+
 	@NotNull
 	private Integer priority;
-	
-	@NotNull
+
+	@NotBlank
 	private String content;
 
 	public String uuid() {
 		return uuid;
+	}
+
+	public String origin() {
+		return origin;
 	}
 
 	public String requester() {
@@ -37,6 +47,14 @@ public class CreateTicketRequest {
 
 	public String content() {
 		return content;
+	}
+
+	public boolean hasUiid() {
+		return Optional.ofNullable(uuid).map(String::trim).filter(String::isEmpty).isPresent();
+	}
+
+	public String generateNewUuid() {
+		return UUID.randomUUID().toString();
 	}
 
 }

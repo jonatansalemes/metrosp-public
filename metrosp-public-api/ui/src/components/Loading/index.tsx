@@ -9,8 +9,8 @@ const Loading: React.FC<LoadingProps> = ({ enabled }) => {
     if (enabled) {
         return (
             <Container>
-                <div className="loading">
-                    <div className="loading-indicator">
+                <div className="ui-loading">
+                    <div className="ui-loading-indicator">
                         <div className="square animation-delay-02s"></div>
                         <div className="square animation-delay-03s"></div>
                         <div className="square animation-delay-04s"></div>
