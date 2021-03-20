@@ -1,10 +1,14 @@
 package com.jslsolucoes.metrosp.pub.api.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jslsolucoes.metrosp.pub.api.domain.MachineLearningUseCase.ClassifyQuery;
 import com.jslsolucoes.metrosp.pub.api.domain.MachineLearningUseCase.ClassifyResult;
+import com.jslsolucoes.metrosp.pub.api.domain.model.Task;
 import com.jslsolucoes.metrosp.pub.api.stereotype.UseCase;
 
 @UseCase
@@ -23,7 +27,8 @@ public class EmailAnalyserUseCase {
 		this.taskUseCase = taskUseCase;
 	}
 
-	public void catalog(String identifier) throws Exception {
+	public List<Task> catalog(String identifier) throws Exception {
+		List<Task> tasks = new ArrayList<>();
 		for (ExchangeEmail exchangeEmail : emailConnector.messages()) {
 			String message = exchangeEmail.message();
 			String from = exchangeEmail.from();
@@ -33,11 +38,11 @@ public class EmailAnalyserUseCase {
 				String label = classifyResult.getLabel();
 				logger.info("New email from ({}) {} with message {} was created as {} with priority 0", id, from,
 						message, label);
-				taskUseCase.createNewOne(id, from, label, 0);
+				tasks.add(taskUseCase.createNewOne(id, from, label, 0 , message));
 			} else {
 				logger.info("Email id {} was already indexed", id);
 			}
-
 		}
+		return tasks;
 	}
 }

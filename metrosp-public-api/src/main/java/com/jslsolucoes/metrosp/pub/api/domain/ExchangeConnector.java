@@ -20,6 +20,7 @@ import javax.mail.search.FlagTerm;
 import javax.mail.search.FromTerm;
 import javax.mail.search.SearchTerm;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,13 +59,12 @@ public class ExchangeConnector {
 				for (int i = 0; i < mimeMultipart.getCount(); i++) {
 					MimeBodyPart mimeBodyPart = (MimeBodyPart) mimeMultipart.getBodyPart(i);
 					String contentType = mimeBodyPart.getContentType();
-					String id = mimeBodyPart.getContentMD5();
 					if (contentType.matches("^text/plain;.+$")) {
 						String content = mimeBodyPart.getContent().toString();
 						Matcher matcher = fromPattern.matcher(message.getFrom()[0].toString());
 						if (matcher.find()) {
 							String from = matcher.group(1);
-							emails.add(new ExchangeEmail(id, from, content));
+							emails.add(new ExchangeEmail(id(from, content), from, content));
 						}
 					}
 				}
@@ -73,6 +73,10 @@ public class ExchangeConnector {
 			store.close();
 		}
 		return emails;
+	}
+
+	private String id(String from, String content) {
+		return DigestUtils.sha256Hex(from + ":" + content);
 	}
 
 }

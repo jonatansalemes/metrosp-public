@@ -28,4 +28,16 @@ public class Responses {
 		return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(value);
 	}
 
+	public static <T> ResponseEntity<T> conflict() {
+		return ResponseEntity.status(HttpStatus.CONFLICT).build();
+	}
+
+	public static <T> ResponseEntity<T> notFound() {
+		return ResponseEntity.notFound().build();
+	}
+
+	public static <T> ResponseEntity<T> ok() {
+		return ResponseEntity.ok().build();
+	}
+
 }
