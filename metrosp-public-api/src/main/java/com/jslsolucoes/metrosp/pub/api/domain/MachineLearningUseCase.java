@@ -18,6 +18,7 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Maps;
 import com.jslsolucoes.metrosp.pub.api.config.MachineLearningEnviromentProperties;
 import com.jslsolucoes.metrosp.pub.api.stereotype.UseCase;
 
@@ -39,8 +40,9 @@ public class MachineLearningUseCase {
 	public ClassifyResult classify(ClassifyQuery classifyQuery) throws Exception {
 		String url = machineLearningEnviromentProperties.getHost() + "/classifiers/naive/bayes/classify";
 		String apiKey = machineLearningEnviromentProperties.getApiKey();
-		Map<String, String> headers = Map.of(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey, HttpHeaders.CONTENT_TYPE,
-				MediaType.APPLICATION_JSON_VALUE);
+		Map<String, String> headers = Maps.newHashMap();
+		headers.put(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey);
+		headers.put(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		RequestEntity<ClassifyQuery> body = RequestEntity.post(URI.create(url)).headers(headers(headers))
 				.body(classifyQuery);
 		ResponseEntity<ClassifyResult> responseEntity = restTemplate.exchange(body, ClassifyResult.class);
@@ -55,8 +57,9 @@ public class MachineLearningUseCase {
 	public TrainResult train(TrainModel trainModel) throws Exception {
 		String url = machineLearningEnviromentProperties.getHost() + "/classifiers/naive/bayes/train";
 		String apiKey = machineLearningEnviromentProperties.getApiKey();
-		Map<String, String> headers = Map.of(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey, HttpHeaders.CONTENT_TYPE,
-				MediaType.APPLICATION_JSON_VALUE);
+		Map<String, String> headers = Maps.newHashMap();
+		headers.put(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey);
+		headers.put(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 		RequestEntity<TrainModel> body = RequestEntity.post(URI.create(url)).headers(headers(headers)).body(trainModel);
 		ResponseEntity<TrainResult> responseEntity = exchange(body, TrainResult.class);
 		int statusCode = responseEntity.getStatusCodeValue();
