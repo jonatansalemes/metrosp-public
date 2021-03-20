@@ -10,7 +10,8 @@ public class BalanceView {
 	private final String phone;
 	private final String fullName;
 
-	public BalanceView(final Long cardNumber, final BigDecimal balance, final String email, final String phone,final String fullName) {
+	public BalanceView(final Long cardNumber, final BigDecimal balance, final String email, final String phone,
+			final String fullName) {
 		this.cardNumber = cardNumber;
 		this.balance = balance;
 		this.email = email;
@@ -33,7 +34,7 @@ public class BalanceView {
 	public String phone() {
 		return phone;
 	}
-	
+
 	public String fullName() {
 		return fullName;
 	}

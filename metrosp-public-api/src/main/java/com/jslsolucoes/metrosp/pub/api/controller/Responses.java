@@ -2,6 +2,8 @@ package com.jslsolucoes.metrosp.pub.api.controller;
 
 import java.net.URI;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -16,6 +18,14 @@ public class Responses {
 
 	private static URI uri(String path, Object... uriVariables) {
 		return ServletUriComponentsBuilder.fromCurrentRequest().path(path).buildAndExpand(uriVariables).toUri();
+	}
+
+	public static <T> ResponseEntity<T> ok(T value) {
+		return ok(value, new HttpHeaders());
+	}
+
+	public static <T> ResponseEntity<T> ok(T value, HttpHeaders httpHeaders) {
+		return ResponseEntity.status(HttpStatus.OK).headers(httpHeaders).body(value);
 	}
 
 }
