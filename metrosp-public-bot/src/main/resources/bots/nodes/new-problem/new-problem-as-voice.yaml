@@ -6,6 +6,7 @@ components:
       text: 'Gerando formulário'
    -  type: 'audio-recorder'
       putOnContextAs: 'newProblemAsVoiceAudio'
+      required: true
 hasPrevious: true
 previous: 'newProblem'
 hasNext: true
