@@ -49,6 +49,7 @@ RUN chmod +x /bot/*.sh && dos2unix /bot/*.sh
 
 RUN git clone --depth 1 --single-branch --branch main https://github.com/jslsolucoes/metrosp-public /opt/metrosp-public
 RUN cd /opt/metrosp-public && mvn install
+COPY api/env.properties /opt/metrosp-public/metrosp-public-api/target/env.properties
 COPY bot/env.properties /opt/metrosp-public/metrosp-public-bot/target/env.properties
 COPY bot/credentials.json /opt/metrosp-public/metrosp-public-bot/target/credentials.json
 
