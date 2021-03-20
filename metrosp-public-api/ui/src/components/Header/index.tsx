@@ -5,7 +5,7 @@ const Header: React.FC = () => {
 
     return (
         <Container>
-            Header
+            <h3>MetroSp CRM</h3>
         </Container>
     )
 }

@@ -6,6 +6,9 @@ import App from './App';
 import AppProvider, { AppContext } from './contexts/AppContext';
 import { ThemeContext, ThemeProvider } from 'styled-components';
 import light from './styles/theme/light';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap';
+import 'popper.js/dist/popper';
 
 ReactDOM.render(
   <React.StrictMode>

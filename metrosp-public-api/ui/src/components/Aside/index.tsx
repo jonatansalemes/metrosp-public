@@ -4,6 +4,8 @@ import api from '../../api';
 import { TaskCategory } from '../../api/model';
 import { AppContext } from '../../contexts/AppContext';
 import { Container } from "./styles";
+import { faCommentAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 type AsideProps = {
@@ -42,15 +44,20 @@ const Aside: React.FC<AsideProps> = ({ appContext }) => {
 
     return (
         <Container>
-            {
-                taskCategories.map((taskCategory, index) => {
-                    return (
-                        <div key={index}>
-                            <Link to={`/tasks/${taskCategory.alias}`}>{taskCategory.name}</Link>
-                        </div>
-                    )
-                })
-            }
+            <hr className="divisor" />
+            <div className="menu">
+                {
+                    taskCategories.map((taskCategory, index) => {
+                        return (
+                            <div key={index} className="menu-item">
+                                <FontAwesomeIcon icon={faCommentAlt} /> <Link to={`/tasks/${taskCategory.alias}`}>
+                                    {taskCategory.name}
+                                </Link>
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </Container>
     )
 }

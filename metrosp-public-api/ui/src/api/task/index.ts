@@ -8,7 +8,9 @@ const apiBaseUrl = endpoint.API_BASE_URL;
 const allForCategory = async (taskCategory: Pick<TaskCategory, "alias">): Promise<Task[]> => {
     const response = await Fetch.newInstance().path(apiBaseUrl)
         .path("tasks").queryString("taskCategory", taskCategory.alias).get();
-    return resolveResponse<Task[]>(response);
+    return resolveResponse<Task[]>(response, () => {
+        return Promise.resolve([]);
+    });
 }
 
 const task = {
