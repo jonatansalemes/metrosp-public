@@ -12,14 +12,21 @@ RUN pip3 install --upgrade pip
 ADD spring-boot /opt/spring-boot
 RUN cd /opt/spring-boot && mvn clean install
 
-#force rebuild
-ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
+#prepare pip
+RUN pip3 install flask waitress textblob tensorflow
+RUN python3 -c 'import nltk; nltk.download("punkt")'
 
 #pgsql
 COPY pgsql /pgsql
 RUN chmod +x /pgsql/*.sh
 RUN dos2unix /pgsql/*.sh
 RUN sed -i 's/port = 5432/port = 5433/' /etc/postgresql/12/main/postgresql.conf
+
+#node
+RUN npm install -g serve
+
+#force rebuild
+ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
 
 #build frontend app
 ARG GIT_USERNAME
@@ -30,7 +37,7 @@ RUN chmod +x /app/*.sh && dos2unix /app/*.sh
 RUN git config --global http.sslVerify false
 RUN git clone --depth 1 --single-branch --branch feature-rc4 https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/jslsolucoes/open-chatbot.git /opt/open-chatbot
 RUN rm -rf /opt/open-chatbot/app/.env*
-RUN npm install -g serve
+
 RUN printf "REACT_APP_URL_BASE=${BOT_URL}/api/v1\nREACT_APP_BOT_ID=bots\nREACT_APP_LOCALE=pt_br\nREACT_APP_TITLE=Metro SP - Atendimento Virtual\n" > /opt/open-chatbot/app/.env
 RUN cd /opt/open-chatbot/app && npm install && npm run build
 
@@ -41,9 +48,6 @@ RUN cd /opt/open-chatbot && mvn install
 ENV FLASK_API_KEY 12345678
 COPY ml /ml
 RUN chmod +x /ml/*.sh && dos2unix /ml/*.sh
-RUN pip3 install flask waitress textblob tensorflow
-RUN python3 -c 'import nltk; nltk.download("punkt")'
-
 
 #build backend metrosp-public api and bot
 COPY api /api
