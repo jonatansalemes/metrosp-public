@@ -18,7 +18,7 @@ components:
       duration: '1s'
       text: 'Gerando formulário'
    -  type: 'form'
-      title: 'Atendente Virtual MetroSP'
+      title: 'Envio de notificações'
       fields:
          -  type: 'form-field'
             label: 'Nome para notificação'

@@ -4,6 +4,8 @@ components:
    -  type: 'typing'
       duration: '1s'
       text: 'Gerando formulário'
+   -  type: 'text'
+      text: 'Grave um áudio com sua dúvida e nos envie clicando em "Próximo Passo"'
    -  type: 'audio-recorder'
       putOnContextAs: 'newProblemAsVoiceAudio'
       required: true
