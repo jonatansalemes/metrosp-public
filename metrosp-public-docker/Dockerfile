@@ -8,6 +8,10 @@ RUN apt-get update --fix-missing
 RUN apt-get install -y nodejs postgresql postgresql-contrib openjdk-8-jdk maven git supervisor npm dos2unix vim telnet python3 python3-pip
 RUN pip3 install --upgrade pip
 
+#create spring-boot mvn deps
+ADD spring-boot /opt/spring-boot
+RUN cd /opt/spring-boot && mvn clean install
+
 #force rebuild
 ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
 
