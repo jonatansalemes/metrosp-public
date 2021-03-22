@@ -5,10 +5,10 @@ components:
       duration: '1s'
       text: 'Gerando formulário'
    -  type: 'form'
-      title: 'Atendente Virtual MetroSP'
+      title: 'Atendente Virtual MetroSP - Consulta de saldo'
       fields:
          -  type: 'form-field'
-            label: 'Confirme o número do seu cartão'
+            label: 'Confirme o número do seu cartão de embarque para verificar seu saldo'
             required: true
             components:
                - type : 'input'
